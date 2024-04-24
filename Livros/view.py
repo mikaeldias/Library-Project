@@ -20,6 +20,27 @@ def insert_user(nome, sobrenome, endereco, email, telefone):
     
 
 # exemplo de funcoes
-insert_ebook('DoM quixote','miquel', 'editora_10,', 1605, '12346')    
+# insert_ebook('DoM quixote','miquel', 'editora_10,', 1605, '12346')    
 
-insert_user('Mikael', 'Dias', 'Angola/Portugal', 'mikaelsd1010@icloud.com', '84555555222')
+# insert_user('Mikael', 'Dias', 'Angola/Portugal', 'mikaelsd1010@icloud.com', '84555555222')
+
+# Funcao para exibir os livros
+def exibir_livros():
+    conn = connect()
+    livros = conn.execute('SELECT * FROM livros').fetchall()
+    conn.close()
+    
+    if not livros:
+        print('Nenhum livro encontrado na biblioteca.')
+        return 
+    print('Livros na biblioteca:')
+    for livro in livros:
+        print(f'ID: {livro[0]}')
+        print(f'Titulo: {livro[1]}')
+        print(f'Autor: {livro[2]}')
+        print(f'Editora: {livro[3]}')
+        print(f'Ano de Publicacao: {livro[4]}')
+        print(f'ISBN: {livro[5]}')
+        print('\n')
+
+exibir_livros()
