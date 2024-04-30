@@ -4,7 +4,7 @@ import sqlite3
 con = sqlite3.connect('dados.db')
 
 # Criar tabela de livros 
-con.execute('CREATE TABLE livros(\
+con.execute('CREATE TABLE IF NOT EXISTS livro(\
                 id INTEGER PRIMARY KEY,\
                 titulo TEXT,\
                 autor TEXT,\
@@ -12,8 +12,8 @@ con.execute('CREATE TABLE livros(\
                 ano_publicacao INTEGER,\
                 isbn TEXT)')
 
-# Criando tabela de Usuarios
-con.execute('CREATE TABLE usuarios(\
+# Criar tabela de Usuários
+con.execute('CREATE TABLE IF NOT EXISTS usuario(\
                 id INTEGER PRIMARY KEY,\
                 nome TEXT,\
                 sobrenome TEXT,\
@@ -21,12 +21,18 @@ con.execute('CREATE TABLE usuarios(\
                 email TEXT,\
                 telefone TEXT)')
 
-# Criando tabela de emprestimo
-con.execute('CREATE TABLE emprestimo(\
+# Criar tabela de empréstimo
+con.execute('CREATE TABLE IF NOT EXISTS emprestimo(\
                 id INTEGER PRIMARY KEY,\
                 id_livro INTEGER,\
-                id_usuario INTIGER,\
+                id_usuario INTEGER,\
                 data_emprestimo TEXT,\
                 data_devolucao TEXT,\
-                FOREIGN KEY(id_livro) REFERENCES livros(id),\
-                FOREIGN KEY(id_usuario) REFERENCES usuarios(id))')
+                FOREIGN KEY(id_livro) REFERENCES livro(id),\
+                FOREIGN KEY(id_usuario) REFERENCES usuario(id))')
+
+# Commit para salvar as alterações no banco de dados
+con.commit()
+
+# Fechar a conexão com o banco de dados
+con.close()

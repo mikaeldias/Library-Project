@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 # Conectar ao banco de dados 
 def connect():
@@ -18,7 +19,8 @@ def insert_user(nome, sobrenome, endereco, email, telefone):
     con.execute("INSERT INTO usuarios(nome, sobrenome, endereco, email, telefone)\
                  VALUES(?,?,?,?,?)", (nome, sobrenome, endereco, email, telefone))
     
-
+    con.commit()
+    con.close()
 # exemplo de funcoes
 insert_ebook('DoM quixote','miquel', 'editora_10,', 1605, '12346')    
 
@@ -43,25 +45,40 @@ def exibir_livros():
         print(f'ISBN: {livro[5]}')
         print('\n')
 
-# Funcao para realizar emprestimos
+# funcao para realizar emprestimos
 def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
-    con = connect()
-    con.execute('INSERT INTO emprestimo(id_livro, id_usuario, data_emprestimo, data_devolucao)\
-                VALUES(?,?,?,?)',(id_livro, id_usuario, data_emprestimo, data_devolucao)) 
-    con.commit()
-    con.close()  
-# Funcao para exibir todos os livros emprestado no momento   
-def get_books_on_loan():
+    con = sqlite3.connect('dados.db')
+    try:
+        con.execute('INSERT INTO emprestimo(id_livro, id_usuario, data_emprestimo, data_devolucao) \
+                     VALUES (?, ?, ?, ?)', (id_livro, id_usuario, data_emprestimo, data_devolucao))
+        con.commit()
+    except sqlite3.OperationalError as e:
+        # Se ocorrer um erro de bloqueio do banco de dados, tentar novamente após 1 segundo
+        if "database is locked" in str(e):
+            print("Erro: O banco de dados está bloqueado. Tentando novamente após 1 segundo.")
+            time.sleep(1)
+            insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao)
+        else:
+            print("Erro ao inserir empréstimo:", e)
+    finally:
+        con.close()
+
+#funcao para exibir todos os livros emprestados no momento
+def get_books_on_loan():    
     con = connect()
     result = con.execute('SELECT livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
-                         FROM livro\
+                         FROM livros\
                          INNER JOIN emprestimo ON livro.id = emprestimo.id_livro\
-                         INNER JOIN usuario ON usuario.id = emprestimo.id_usuario\
+                         INNER JOIN  usuario ON usuario.id = emprestimo.id_usuario\
                          WHERE emprestimo.data_devolucao IS NULL').fetchall()
-    con.close()    
+    con.close()
     return result
-#insert_loan(1,1,'2024-04-24', None)
-insert_loan(1, 1, "2022-09-20", None)
-print(get_books_on_loan())
 
-#exibir_livros()
+insert_loan(1, 1, '2024/04/30', None)
+
+
+
+
+
+
+exibir_livros()
