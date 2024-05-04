@@ -10,7 +10,7 @@ def connect():
 def insert_ebook(titulo, autor, editora, ano_publicacao, isbn):
     con = connect()
     try:
-        con.execute("INSERT INTO livro(titulo, autor, editora, ano_publicacao, isbn) VALUES(?,?,?,?,?)", (titulo, autor, editora, ano_publicacao, isbn))
+        con.execute("INSERT INTO livro(titulo, autor, editora, ano_publicacao, isbn) VALUES(? ,? ,? ,? ,?)", (titulo, autor, editora, ano_publicacao, isbn))
         con.commit()
     except sqlite3.OperationalError as e:
         # Se ocorrer um erro de bloqueio do banco de dados, tentar novamente após 1 segundo
@@ -27,15 +27,26 @@ def insert_ebook(titulo, autor, editora, ano_publicacao, isbn):
 # Funcao para inserir usuários
 def insert_user(nome, sobrenome, endereco, email, telefone):
     con = connect()
-    con.execute("INSERT INTO usuarios(nome, sobrenome, endereco, email, telefone)\
-                 VALUES(?,?,?,?,?)", (nome, sobrenome, endereco, email, telefone))
+    con.execute("INSERT INTO usuario(nome, sobrenome, endereco, email, telefone)\
+                 VALUES(? ,? ,? ,? ,?)", (nome, sobrenome, endereco, email, telefone))
     
     con.commit()
     con.close()
 # exemplo de funcoes
-
-
+# insert_ebook('Dom Quixote', 'Miquel', 'Editora 1', 1605, '123456')
 # insert_user('Mikael', 'Dias', 'Angola/Portugal', 'mikaelsd1010@icloud.com', '84555555222')
+
+# funcao para exibir usuarios
+def get_users():
+    con = connect()
+    c = con.cursor()
+    c.execute('SELECT * FROM usuarios')
+    users = c.fetchall()
+    con.close()
+    print(users)
+    return users
+
+
 
 # Funcao para exibir os livros
 def exibir_livros():
@@ -86,7 +97,7 @@ def get_books_on_loan():
     return result
 
 
-# funçao para tualizar a data de devolução de emprestimo
+# funçao para atualizar a data de devolução de emprestimo
 def update_loan_return_date(id_emprestimo, data_devolucao):
     con = connect()
     try:
@@ -102,10 +113,10 @@ def update_loan_return_date(id_emprestimo, data_devolucao):
             print("Erro ao atualizar a data de devolução do empréstimo:", e)
     finally:
         con.close()
-insert_loan(1, 1, '2024/03/30', None)
+insert_loan(1, 1, '2022-08-13', None)
 livros_emprestados = get_books_on_loan()
+# print(livros_emprestados)
 '''insert_ebook('Dom Quixote', 'Miguel de Cervantes', 'Editora X', 1605, '9781234567890')'''
-update_loan_return_date(6, '2024-04-30')
-'''print(livros_emprestados)'''
+# update_loan_return_date(1, '2022-09-21')
 
-exibir_livros()
+# exibir_livros()
