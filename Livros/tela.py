@@ -59,154 +59,159 @@ app_linha = Label(frameCima, width= 770, height= 1 , padx= 5, anchor= NW, font= 
 app_linha.place(x= 0, y=47) # linha azul abaixo do texto
 
 # novo usuario
+# novo usuario
+# Função para registrar um novo usuário
+# novo usuario
 def novo_usuario():
         
-        global img_salvar
+    global img_salvar
 
-        def add():
-             first_name = e_p_nome.get()
-             last_name = e_sobrenome.get()
-             address = e_endereco.get()
-             email = e_email.get()
-             phone = e_numero.get()
+    def add():
+        first_name = e_p_nome.get()
+        last_name = e_sobrenome.get()
+        address = e_endereco.get()
+        email = e_email.get()
+        phone = e_numero.get()
 
-             lista = [first_name, last_name, address, email, phone]
+        lista = [first_name, last_name, address, email, phone]
 
-             # verificando caso algum campo esteja vazio
-             for i in lista:
-                  if i == '':
-                        messagebox.showerror('Erro:', 'Preencha todos os campos')
-                        return
+        # verificando caso algum campo esteja vazio
+        for i in lista:
+            if i == '':
+                messagebox.showerror('Erro:', 'Preencha todos os campos')
+                return
                   
-                  # inserindo os dados no banco de dados
-                  insert_user(first_name, last_name, address, email, phone)
+            # inserindo os dados no banco de dados
+        insert_user(first_name, last_name, address, email, phone)
 
-                  messagebox.showinfo('Sucesso', 'Usuário registrado com sucesso')
+        messagebox.showinfo('Sucesso', 'Usuário registrado com sucesso')
 
-                  # limpados os campos de entrada
-                  e_p_nome.delete(0, END)
-                  e_sobrenome.delete(0, END)
-                  e_endereco.delete(0, END)
-                  e_email.delete(0, END)
-                  e_numero.delete(0, END)
+        # limpados os campos de entrada
+        e_p_nome.delete(0, END)
+        e_sobrenome.delete(0, END)
+        e_endereco.delete(0, END)
+        e_email.delete(0, END)
+        e_numero.delete(0, END)
+
+
 
                   
 
-        app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
-        app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
+    app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
 
-        app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
-        app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
 
-        # label primeiro nome e entrada primeiro nome
-        l_p_nome = Label(frameDireita, text= 'Primeiro nome*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-        l_p_nome.grid(row= 2, column= 0, padx= 5, pady= 5, sticky= NSEW)
-        e_p_nome = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-        e_p_nome.grid(row= 2, column= 1, padx= 5, pady= 5, sticky= NSEW)
+    # label primeiro nome e entrada primeiro nome
+    l_p_nome = Label(frameDireita, text= 'Primeiro nome*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_p_nome.grid(row= 2, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_p_nome = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_p_nome.grid(row= 2, column= 1, padx= 5, pady= 5, sticky= NSEW)
 
-        # label sobrenome e entrada sobrenome
-        l_sobrenome = Label(frameDireita, text= 'Sobrenome*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-        l_sobrenome.grid(row= 3, column= 0, padx= 5, pady= 5, sticky= NSEW)
-        e_sobrenome = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-        e_sobrenome.grid(row= 3, column= 1, padx= 5, pady= 5, sticky= NSEW)
-        
-        # label e entrada endereco
-        l_endereco = Label(frameDireita, text= 'Endereço do usuário*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-        l_endereco.grid(row= 4, column= 0, padx= 5, pady= 5, sticky= NSEW)
-        e_endereco = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-        e_endereco.grid(row= 4, column= 1, padx= 5, pady= 5, sticky= NSEW)
+    # label sobrenome e entrada sobrenome
+    l_sobrenome = Label(frameDireita, text= 'Sobrenome*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_sobrenome.grid(row= 3, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_sobrenome = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_sobrenome.grid(row= 3, column= 1, padx= 5, pady= 5, sticky= NSEW)
 
-        # label e entrada email
-        l_email = Label(frameDireita, text= 'Email do usuário', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-        l_email.grid(row= 5, column= 0, padx= 5, pady= 5, sticky= NSEW)
-        e_email = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-        e_email.grid(row= 5, column= 1, padx= 5, pady= 5, sticky= NSEW)
+    # label e entrada endereco
+    l_endereco = Label(frameDireita, text= 'Endereço do usuário*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_endereco.grid(row= 4, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_endereco = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_endereco.grid(row= 4, column= 1, padx= 5, pady= 5, sticky= NSEW)
 
-        # label e entrada numero
-        l_numero = Label(frameDireita, text= 'Número de telefone', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-        l_numero.grid(row= 6, column= 0, padx= 5, pady= 5, sticky= NSEW)
-        e_numero = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-        e_numero.grid(row= 6, column= 1, padx= 5, pady= 5, sticky= NSEW)
+    # label e entrada email
+    l_email = Label(frameDireita, text= 'Email do usuário', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_email.grid(row= 5, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_email = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_email.grid(row= 5, column= 1, padx= 5, pady= 5, sticky= NSEW)
 
-        # botao salvar
-        img_salvar = Image.open('salvar.png')
-        img_salvar = img_salvar.resize((18,18))
-        img_salvar = ImageTk.PhotoImage(img_salvar)
-        b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
-        b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
+    # label e entrada numero
+    l_numero = Label(frameDireita, text= 'Número de telefone', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_numero.grid(row= 6, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_numero = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_numero.grid(row= 6, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # botao salvar
+    img_salvar = Image.open('salvar.png')
+    img_salvar = img_salvar.resize((18,18))
+    img_salvar = ImageTk.PhotoImage(img_salvar)
+    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+    b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
+
+
 
 def ver_usuarios():
         
 
-        app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
-        app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
-        app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
-        app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
+    app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
 
-        dados = get_users()
+    dados = get_users()
         
-        # creating a treeview with dual scrollbars
-        list_header = [ 'ID', 'Nome', 'Sobrenome', 'Endereço', 'Email', 'Telefone']
+    # creating a treeview with dual scrollbars
+    list_header = [ 'ID', 'Nome', 'Sobrenome', 'Endereço', 'Email', 'Telefone']
 
-        global tree
+    global tree
 
-        tree = ttk.Treeview(frameDireita, selectmode= 'extended', columns= list_header, show= 'headings')
+    tree = ttk.Treeview(frameDireita, selectmode= 'extended', columns= list_header, show= 'headings')
 
-        # vertical scrollbar
-        vsb = ttk.Scrollbar(frameDireita, orient= 'vertical', command= tree.yview)
+    # vertical scrollbar
+    vsb = ttk.Scrollbar(frameDireita, orient= 'vertical', command= tree.yview)
 
-        # horizontal scrollbar
-        hsb = ttk.Scrollbar(frameDireita, orient= 'horizontal', command= tree.xview)
+    # horizontal scrollbar
+    hsb = ttk.Scrollbar(frameDireita, orient= 'horizontal', command= tree.xview)
 
-        tree.configure(yscrollcommand= vsb.set, xscrollcommand= hsb.set)
+    tree.configure(yscrollcommand= vsb.set, xscrollcommand= hsb.set)
 
-        tree.grid(column= 0, row= 2, sticky= 'nsew')
-        vsb.grid(column= 1, row= 2, sticky= 'ns')
-        hsb.grid(column= 0, row= 3, sticky= 'ew')
-        frameDireita.grid_rowconfigure(0, weight= 12)
+    tree.grid(column= 0, row= 2, sticky= 'nsew')
+    vsb.grid(column= 1, row= 2, sticky= 'ns')
+    hsb.grid(column= 0, row= 3, sticky= 'ew')
+    frameDireita.grid_rowconfigure(0, weight= 12)
 
-        hd = ['nw', 'nw', 'nw','nw', 'nw', 'nw']
-        h = [20 , 80, 80, 120, 76, 100]
-        n = 0
+    hd = ['nw', 'nw', 'nw','nw', 'nw', 'nw']
+    h = [20 , 80, 80, 120, 76, 100]
+    n = 0
 
-        for col in list_header:
-            tree.heading(col, text= col, anchor= 'nw')
-            # adjust the column's width to the header string
-            tree.column(col, width= h[n], anchor= hd[n])
+    for col in list_header:
+        tree.heading(col, text= col, anchor= 'nw')
+        # adjust the column's width to the header string
+        tree.column(col, width= h[n], anchor= hd[n])
 
-            n+= 1
+        n+= 1
         
         for item in dados:
             tree.insert('', 'end', values= item)
 
-
-
-# função para controlar o menu
+# Função para controlar o menu
 def control(i):      
+    
     # novo usuario
     if i == 'novo_usuario':
         for widget in frameDireita.winfo_children():
             widget.destroy()
-        
         # chamando a funcao novo usuario
         novo_usuario()
-
-
-    # ver usuarios
-    if i == 'ver_usuario':
+           
+    
+    # ver usuario
+    if i == 'ver_usuarios':
         for widget in frameDireita.winfo_children():
             widget.destroy()
-        
         # chamando a funcao novo usuario
         ver_usuarios()
-
+     
+ 
 #  Menu
 
 # Novo usuario
 img_usuario = Image.open('novo_usuario.png')
 img_usuario = img_usuario.resize((18,18))
 img_usuario = ImageTk.PhotoImage(img_usuario)
-b_usuario = Button(frameEsquerda, command= lambda: control ('novo_usuario') ,image= img_usuario, compound= LEFT, anchor= NW, text= '  Novo usuário', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_usuario = Button(frameEsquerda, command= lambda: control('novo_usuario') ,image= img_usuario, compound= LEFT, anchor= NW, text= '  Novo usuário', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_usuario.grid(row= 0, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # Novo livro
@@ -227,7 +232,7 @@ b_ver_livro.grid(row= 2, column= 0, sticky= NSEW, padx= 5, pady= 6)
 img_ver_usuario = Image.open('logo_usuarios.png')
 img_ver_usuario= img_ver_usuario.resize((18,18))
 img_ver_usuario= ImageTk.PhotoImage(img_ver_usuario)
-b_ver_usuario = Button(frameEsquerda, command= lambda: control('ver_usuarios'), image= img_ver_usuario, compound= LEFT, anchor= NW, text= '  Exibir todos os usuários', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_ver_usuario = Button(frameEsquerda, command=lambda: control('ver_usuarios'), image=img_ver_usuario, compound=LEFT, anchor=NW, text='  Exibir todos os usuários', bg=co4, fg=co1, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
 b_ver_usuario.grid(row= 3, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # realizar um emprestimo

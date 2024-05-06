@@ -40,10 +40,9 @@ def insert_user(nome, sobrenome, endereco, email, telefone):
 def get_users():
     con = connect()
     c = con.cursor()
-    c.execute('SELECT * FROM usuarios')
+    c.execute('SELECT * FROM usuario')
     users = c.fetchall()
     con.close()
-    print(users)
     return users
 
 
