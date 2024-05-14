@@ -56,15 +56,10 @@ def exibir_livros():
     if not livros:
         print('Nenhum livro encontrado na biblioteca.')
         return 
-    print('Livros na biblioteca:')
-    for livro in livros:
-        print(f'ID: {livro[0]}')
-        print(f'Titulo: {livro[1]}')
-        print(f'Autor: {livro[2]}')
-        print(f'Editora: {livro[3]}')
-        print(f'Ano de Publicacao: {livro[4]}')
-        print(f'ISBN: {livro[5]}')
-        print('\n')
+    
+    return(livros)
+
+exibir_livros()
 
 # funcao para realizar emprestimos
 def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):

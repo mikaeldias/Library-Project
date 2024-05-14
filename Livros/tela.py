@@ -145,7 +145,7 @@ def novo_usuario():
 def ver_usuarios():
         
 
-    app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_ = Label(frameDireita, text= 'Ver usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
     app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
     app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
     app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
@@ -186,6 +186,132 @@ def ver_usuarios():
         for item in dados:
             tree.insert('', 'end', values= item)
 
+
+def novo_livro():
+    global img_salvar
+
+    def add():
+        title = e_titulo.get()
+        author = e_autor.get()
+        publish = e_editora.get()
+        year = e_ano.get()
+        isbn = e_isbn.get()
+
+        lista = [title, author, publish, year, isbn]
+
+        # verificando caso algum campo esteja vazio
+        for i in lista:
+            if i == '':
+                messagebox.showerror('Erro:', 'Preencha todos os campos')
+                return
+                  
+            # inserindo os dados no banco de dados
+        insert_ebook(title, author, publish, year, isbn)
+
+        messagebox.showinfo('Sucesso', 'Usuário registrado com sucesso')
+
+        # limpados os campos de entrada
+        e_titulo.delete(0, END)
+        e_editora.delete(0, END)
+        e_ano.delete(0, END)
+        e_autor.delete(0, END)
+        e_isbn.delete(0, END)
+
+
+
+    app_ = Label(frameDireita, text= 'Inserir um novo livro', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_.grid(row= 0, column= 0, columnspan= 3, sticky= NSEW)
+
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha.grid(row= 1, column= 0, columnspan= 3, sticky= NSEW)
+
+    # label primeiro nome e entrada primeiro nome
+    l_livro = Label(frameDireita, text= 'Titulo do livro*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_livro.grid(row= 2, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_titulo = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_titulo.grid(row= 2, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label sobrenome e entrada sobrenome
+    l_autor = Label(frameDireita, text= 'Autor do livro*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_autor.grid(row= 3, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_autor = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_autor.grid(row= 3, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label e entrada endereco
+    l_editora = Label(frameDireita, text= 'Editora do livro*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_editora.grid(row= 4, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_editora = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_editora.grid(row= 4, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label e entrada email
+    l_ano = Label(frameDireita, text= 'Ano de publicação do livro', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_ano.grid(row= 5, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_ano = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_ano.grid(row= 5, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label e entrada numero
+    l_isbn = Label(frameDireita, text= 'ISBN do livro', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    l_isbn.grid(row= 6, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    e_isbn = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    e_isbn.grid(row= 6, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # botao salvar
+    img_salvar = Image.open('salvar.png')
+    img_salvar = img_salvar.resize((18,18))
+    img_salvar = ImageTk.PhotoImage(img_salvar)
+    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+    b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
+    
+
+# funcao ver livros
+
+        
+
+def ver_livros():
+    app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
+    app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
+
+    dados = exibir_livros()
+    
+    # Remova a árvore de visualização antiga se ela já existir
+    if hasattr(frameDireita, 'tree'):
+        frameDireita.tree.destroy()
+
+    # Criando uma nova árvore de visualização
+    list_header = ['ID', 'Título', 'Autor', 'Editora', 'Ano', 'ISBN']
+    tree = ttk.Treeview(frameDireita, selectmode='extended', columns=list_header, show='headings')
+
+    vsb = ttk.Scrollbar(frameDireita, orient='vertical', command=tree.yview)
+    hsb = ttk.Scrollbar(frameDireita, orient='horizontal', command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    tree.grid(column=0, row=2, sticky='nsew')
+    vsb.grid(column=1, row=2, sticky='ns')
+    hsb.grid(column=0, row=3, sticky='ew')
+    frameDireita.grid_rowconfigure(0, weight=12)
+
+    hd = ['nw', 'nw', 'nw', 'nw', 'nw', 'nw']
+    h = [20, 165, 110, 100, 50, 100]
+    n = 0
+
+    for col in list_header:
+        tree.heading(col, text=col, anchor='nw')
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
+
+    for item in dados:
+        tree.insert('', 'end', values=item)
+
+    # Atualize o atributo tree do frameDireita
+    frameDireita.tree = tree
+
+
+
+
+
 # Função para controlar o menu
 def control(i):      
     
@@ -203,6 +329,20 @@ def control(i):
             widget.destroy()
         # chamando a funcao novo usuario
         ver_usuarios()
+
+    # novo livro
+    if i == 'novo_livro':
+        for widget in frameDireita.winfo_children():
+            widget.destroy()
+        # chamando a funcao novo livro
+        novo_livro()
+    
+    # ver livro
+    if i == 'ver_livros':
+        for widget in frameDireita.winfo_children():
+            widget.destroy()
+        # chamando a funcao ver livro
+        ver_livros()
      
  
 #  Menu
@@ -218,14 +358,14 @@ b_usuario.grid(row= 0, column= 0, sticky= NSEW, padx= 5, pady= 6)
 img_novo_livro = Image.open('novo_usuario.png')
 img_novo_livro = img_novo_livro.resize((18,18))
 img_novo_livro = ImageTk.PhotoImage(img_novo_livro)
-b_novo_livro = Button(frameEsquerda, image= img_novo_livro, compound= LEFT, anchor= NW, text= '  Novo livro', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_novo_livro = Button(frameEsquerda, command= lambda:control('novo_livro'), image= img_novo_livro, compound= LEFT, anchor= NW, text= '  Novo livro', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_novo_livro.grid(row= 1, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # ver livros
 img_ver_livro = Image.open('logo_livros.png')
 img_ver_livro = img_ver_livro.resize((18,18))
 img_ver_livro = ImageTk.PhotoImage(img_ver_livro)
-b_ver_livro = Button(frameEsquerda, image= img_ver_livro, compound= LEFT, anchor= NW, text= '  Exibir todos os livros', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_ver_livro = Button(frameEsquerda, command=lambda:control('ver_livros'), image= img_ver_livro, compound= LEFT, anchor= NW, text= '  Exibir todos os livros', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_ver_livro.grid(row= 2, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # ver usuarios
