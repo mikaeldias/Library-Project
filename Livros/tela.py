@@ -308,9 +308,73 @@ def ver_livros():
     # Atualize o atributo tree do frameDireita
     frameDireita.tree = tree
 
+    # emprestimos
+def emprestimo():
+    global img_salvar
 
+    def add():
+        idlivro = id_livro.get()
+        idusuario = id_usuario.get()
+        dtemprestimo = data_emprestimo.get()
+        dtdevolucao = data_devolucao.get()
+        
 
+        lista = [id_livro, id_usuario, data_emprestimo, data_devolucao]
 
+        # verificando caso algum campo esteja vazio
+        for i in lista:
+            if i == '':
+                messagebox.showerror('Erro:', 'Preencha todos os campos')
+                return
+                  
+            # inserindo os dados no banco de dados
+        insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao)
+
+        messagebox.showinfo('Sucesso', 'Emprestimo registrado com sucesso')
+
+        # limpados os campos de entrada
+        idlivro.delete(0, END)
+        idusuario.delete(0, END)
+        dtemprestimo.delete(0, END)
+        dtdevolucao.delete(0, END)
+           
+
+    app_ = Label(frameDireita, text= 'Emprestimo', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
+
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
+
+    # label primeiro nome e entrada primeiro nome
+    livro = Label(frameDireita, text= 'ID Livro*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    livro.grid(row= 2, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    id_livro = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    id_livro.grid(row= 2, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label sobrenome e entrada sobrenome
+    usuario = Label(frameDireita, text= 'ID Usuário*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    usuario.grid(row= 3, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    id_usuario = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    id_usuario.grid(row= 3, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label e entrada endereco
+    emprestimo = Label(frameDireita, text= 'Data Emprestimo*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    emprestimo.grid(row= 4, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    data_emprestimo = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    data_emprestimo.grid(row= 4, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # label e entrada email
+    devolucao = Label(frameDireita, text= 'Data Devolução', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
+    devolucao.grid(row= 5, column= 0, padx= 5, pady= 5, sticky= NSEW)
+    data_devolucao = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
+    data_devolucao.grid(row= 5, column= 1, padx= 5, pady= 5, sticky= NSEW)
+
+    # botao salvar
+    img_salvar = Image.open('salvar.png')
+    img_salvar = img_salvar.resize((18,18))
+    img_salvar = ImageTk.PhotoImage(img_salvar)
+    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+    b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
 
 # Função para controlar o menu
 def control(i):      
@@ -343,7 +407,13 @@ def control(i):
             widget.destroy()
         # chamando a funcao ver livro
         ver_livros()
-     
+
+        # realizar emprestimo
+    if i == 'emprestimo':
+        for widget in frameDireita.winfo_children():
+            widget.destroy()
+        # chamando a funcao ver livro
+        emprestimo()
  
 #  Menu
 
@@ -379,7 +449,7 @@ b_ver_usuario.grid(row= 3, column= 0, sticky= NSEW, padx= 5, pady= 6)
 img_emprestimo = Image.open('novo_usuario.png')
 img_emprestimo = img_emprestimo.resize((18,18))
 img_emprestimo = ImageTk.PhotoImage(img_emprestimo)
-b_emprestimo = Button(frameEsquerda, image= img_emprestimo, compound= LEFT, anchor= NW, text= '  Realizar um emprestimo', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_emprestimo = Button(frameEsquerda, command=lambda: control('emprestimo'), image= img_emprestimo, compound= LEFT, anchor= NW, text= '  Realizar um emprestimo', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_emprestimo.grid(row= 4, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # devolução de um emprestimo
