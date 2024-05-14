@@ -203,7 +203,7 @@ def novo_livro():
                 messagebox.showerror('Erro:', 'Preencha todos os campos')
                 return
                   
-            # inserindo os dados no banco de dados
+        # inserindo os dados no banco de dados
         insert_ebook(title, author, publish, year, isbn)
 
         messagebox.showinfo('Sucesso', 'Usuário registrado com sucesso')
@@ -315,17 +315,16 @@ def emprestimo():
         idusuario = id_usuario.get()
         dtemprestimo = data_emprestimo.get()
         dtdevolucao = data_devolucao.get()
-        
 
         lista = [id_livro, id_usuario, data_emprestimo, data_devolucao]
 
         # verificando caso algum campo esteja vazio
-        for i in lista:
-            if i == '':
-                messagebox.showerror('Erro:', 'Preencha todos os campos')
-                return
-                  
-            # inserindo os dados no banco de dados
+        # verificando se algum campo está vazio
+        if '' in [idlivro, idusuario, dtemprestimo, dtdevolucao]:
+            messagebox.showerror('Erro:', 'Preencha todos os campos')
+            return
+
+        # inserindo os dados no banco de dados
         insert_loan(idlivro, idusuario, dtemprestimo, dtdevolucao)
 
         messagebox.showinfo('Sucesso', 'Emprestimo registrado com sucesso')
@@ -376,20 +375,20 @@ def emprestimo():
 
 # Livros emprestados no momento
 def livros_emprestimo():
-    
-    dados = get_books_on_loan()
 
     app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
     app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
+
+    dados = get_books_on_loan()
     
     # Remova a árvore de visualização antiga se ela já existir
     if hasattr(frameDireita, 'tree'):
         frameDireita.tree.destroy()
 
     # Criando uma nova árvore de visualização
-    list_header = ['Livro', 'Usuário', 'Data de emprestimo', 'Data de devolução']
+    list_header = ['ID', 'Título', 'Autor', 'Editora', 'Ano', 'ISBN']
     tree = ttk.Treeview(frameDireita, selectmode='extended', columns=list_header, show='headings')
 
     vsb = ttk.Scrollbar(frameDireita, orient='vertical', command=tree.yview)
@@ -403,19 +402,20 @@ def livros_emprestimo():
     frameDireita.grid_rowconfigure(0, weight=12)
 
     hd = ['nw', 'nw', 'nw', 'nw', 'nw', 'nw']
-    h = [80, 100, 110, 100]
+    h = [20, 165, 110, 100, 50, 100]
     n = 0
 
     for col in list_header:
         tree.heading(col, text=col, anchor='nw')
         tree.column(col, width=h[n], anchor=hd[n])
         n += 1
-    
+
     for item in dados:
         tree.insert('', 'end', values=item)
 
     # Atualize o atributo tree do frameDireita
     frameDireita.tree = tree
+    
 
 
 
