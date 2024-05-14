@@ -58,8 +58,6 @@ app_logo.place(x= 50, y=7) # texto
 app_linha = Label(frameCima, width= 770, height= 1 , padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co3, fg= co1)
 app_linha.place(x= 0, y=47) # linha azul abaixo do texto
 
-# novo usuario
-# novo usuario
 # Função para registrar um novo usuário
 # novo usuario
 def novo_usuario():
@@ -328,15 +326,15 @@ def emprestimo():
                 return
                   
             # inserindo os dados no banco de dados
-        insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao)
+        insert_loan(idlivro, idusuario, dtemprestimo, dtdevolucao)
 
         messagebox.showinfo('Sucesso', 'Emprestimo registrado com sucesso')
 
         # limpados os campos de entrada
-        idlivro.delete(0, END)
-        idusuario.delete(0, END)
-        dtemprestimo.delete(0, END)
-        dtdevolucao.delete(0, END)
+        id_livro.delete(0, END)
+        id_usuario.delete(0, END)
+        data_emprestimo.delete(0, END)
+        data_devolucao.delete(0, END)
            
 
     app_ = Label(frameDireita, text= 'Emprestimo', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
@@ -376,6 +374,51 @@ def emprestimo():
     b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
     b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
 
+# Livros emprestados no momento
+def livros_emprestimo():
+    
+    dados = get_books_on_loan()
+
+    app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
+    app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
+    
+    # Remova a árvore de visualização antiga se ela já existir
+    if hasattr(frameDireita, 'tree'):
+        frameDireita.tree.destroy()
+
+    # Criando uma nova árvore de visualização
+    list_header = ['Livro', 'Usuário', 'Data de emprestimo', 'Data de devolução']
+    tree = ttk.Treeview(frameDireita, selectmode='extended', columns=list_header, show='headings')
+
+    vsb = ttk.Scrollbar(frameDireita, orient='vertical', command=tree.yview)
+    hsb = ttk.Scrollbar(frameDireita, orient='horizontal', command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    tree.grid(column=0, row=2, sticky='nsew')
+    vsb.grid(column=1, row=2, sticky='ns')
+    hsb.grid(column=0, row=3, sticky='ew')
+    frameDireita.grid_rowconfigure(0, weight=12)
+
+    hd = ['nw', 'nw', 'nw', 'nw', 'nw', 'nw']
+    h = [80, 100, 110, 100]
+    n = 0
+
+    for col in list_header:
+        tree.heading(col, text=col, anchor='nw')
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
+    
+    for item in dados:
+        tree.insert('', 'end', values=item)
+
+    # Atualize o atributo tree do frameDireita
+    frameDireita.tree = tree
+
+
+
 # Função para controlar o menu
 def control(i):      
     
@@ -414,6 +457,12 @@ def control(i):
             widget.destroy()
         # chamando a funcao ver livro
         emprestimo()
+
+    if i == 'livros_emprestimo':
+        for widget in frameDireita.winfo_children():
+            widget.destroy()
+        # chamando a funcao ver livro
+        livros_emprestimo()
  
 #  Menu
 
@@ -463,7 +512,7 @@ b_devolucao.grid(row= 5, column= 0, sticky= NSEW, padx= 5, pady= 6)
 img_livros_emprestados = Image.open('logo_emprestimos.png')
 img_livros_emprestados = img_livros_emprestados.resize((18,18))
 img_livros_emprestados = ImageTk.PhotoImage(img_livros_emprestados)
-b_livros_emprestados = Button(frameEsquerda, image= img_livros_emprestados, compound= LEFT, anchor= NW, text= '  Livros emprestados no momento', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_livros_emprestados = Button(frameEsquerda, command=lambda: control('livros_emprestimo'), image= img_livros_emprestados, compound= LEFT, anchor= NW, text= '  Livros emprestados no momento', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_livros_emprestados.grid(row= 6, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 

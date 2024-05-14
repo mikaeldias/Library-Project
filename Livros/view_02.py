@@ -82,7 +82,7 @@ def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
 #funcao para exibir todos os livros emprestados no momento
 def get_books_on_loan():    
     con = connect()
-    result = con.execute('SELECT livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.id, emprestimo.data_emprestimo, emprestimo.data_devolucao\
+    result = con.execute('SELECT livro.titulo, usuario.nome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
                          FROM livro\
                          INNER JOIN emprestimo ON livro.id = emprestimo.id_livro\
                          INNER JOIN  usuario ON usuario.id = emprestimo.id_usuario\
@@ -107,10 +107,5 @@ def update_loan_return_date(id_emprestimo, data_devolucao):
             print("Erro ao atualizar a data de devolução do empréstimo:", e)
     finally:
         con.close()
-insert_loan(1, 1, '2022-08-13', None)
-livros_emprestados = get_books_on_loan()
-# print(livros_emprestados)
-'''insert_ebook('Dom Quixote', 'Miguel de Cervantes', 'Editora X', 1605, '9781234567890')'''
-# update_loan_return_date(1, '2022-09-21')
 
-# exibir_livros()
+
