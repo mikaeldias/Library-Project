@@ -63,26 +63,15 @@ exibir_livros()
 
 # funcao para realizar emprestimos
 def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
-    con = sqlite3.connect('dados.db')
-    try:
-        con.execute('INSERT INTO emprestimo(id_livro, id_usuario, data_emprestimo, data_devolucao) \
-                     VALUES (?, ?, ?, ?)', (id_livro, id_usuario, data_emprestimo, data_devolucao))
-        con.commit()
-    except sqlite3.OperationalError as e:
-        # Se ocorrer um erro de bloqueio do banco de dados, tentar novamente após 1 segundo
-        if "database is locked" in str(e):
-            print("Erro: O banco de dados está bloqueado. Tentando novamente após 1 segundo.")
-            time.sleep(1)
-            insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao)
-        else:
-            print("Erro ao inserir empréstimo:", e)
-    finally:
-        con.close()
+    conn = connect()
+    conn.execute("INSERT INTO emprestimo (id_livro, id_usuario, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?)", (id_livro, id_usuario, data_emprestimo, data_devolucao))
+    conn.commit()
+    conn.close()
 
 #funcao para exibir todos os livros emprestados no momento
 def get_books_on_loan():    
     con = connect()
-    result = con.execute('SELECT livro.titulo, usuario.nome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
+    result = con.execute('SELECT emprestimo.id, livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
                          FROM livro\
                          INNER JOIN emprestimo ON livro.id = emprestimo.id_livro\
                          INNER JOIN  usuario ON usuario.id = emprestimo.id_usuario\
@@ -93,19 +82,9 @@ def get_books_on_loan():
 
 # funçao para atualizar a data de devolução de emprestimo
 def update_loan_return_date(id_emprestimo, data_devolucao):
-    con = connect()
-    try:
-        con.execute('UPDATE emprestimo SET data_devolucao = ? WHERE id = ?', (data_devolucao, id_emprestimo))
-        con.commit()
-    except sqlite3.OperationalError as e:
-        # Se ocorrer um erro de bloqueio do banco de dados, tentar novamente após 1 segundo
-        if "database is locked" in str(e):
-            print("Erro: O banco de dados está bloqueado. Tentando novamente após 1 segundo.")
-            time.sleep(1)
-            update_loan_return_date(id_emprestimo, data_devolucao)
-        else:
-            print("Erro ao atualizar a data de devolução do empréstimo:", e)
-    finally:
-        con.close()
+    conn = connect()
+    conn.execute("UPDATE emprestimo SET data_devolucao = ? WHERE id = ?", (data_devolucao, id_emprestimo))
+    conn.commit()
+    conn.close()
 
 

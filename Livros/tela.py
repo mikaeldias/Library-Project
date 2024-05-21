@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+
 from tkinter import messagebox
 
 # importando as funcoes da view
@@ -206,7 +207,7 @@ def novo_livro():
         # inserindo os dados no banco de dados
         insert_ebook(title, author, publish, year, isbn)
 
-        messagebox.showinfo('Sucesso', 'Usuário registrado com sucesso')
+        messagebox.showinfo('Sucesso', 'Livro registrado com sucesso')
 
         # limpados os campos de entrada
         e_titulo.delete(0, END)
@@ -311,111 +312,167 @@ def emprestimo():
     global img_salvar
 
     def add():
-        idlivro = id_livro.get()
-        idusuario = id_usuario.get()
-        dtemprestimo = data_emprestimo.get()
-        dtdevolucao = data_devolucao.get()
+        user_id = e_id_usuario.get()  # Corrigido para 'e_id_usuario'
+        book_id = e_id_livro.get()     # Corrigido para 'e_id_livro'
+        dev_id = e_data_devolucao.get()
+        dt_id = e_data_emprestimo.get()
 
-        lista = [id_livro, id_usuario, data_emprestimo, data_devolucao]
+        lista = [user_id, book_id, dt_id, dev_id]
 
-        # verificando caso algum campo esteja vazio
         # verificando se algum campo está vazio
-        if '' in [idlivro, idusuario, dtemprestimo, dtdevolucao]:
-            messagebox.showerror('Erro:', 'Preencha todos os campos')
-            return
+        for i in lista:
+            if i == '':
+                messagebox.showerror('Erro:', 'Preencha todos os campos')
+                return
 
         # inserindo os dados no banco de dados
-        insert_loan(idlivro, idusuario, dtemprestimo, dtdevolucao)
+        insert_loan(user_id, book_id, dt_id, dev_id)
 
-        messagebox.showinfo('Sucesso', 'Emprestimo registrado com sucesso')
+        messagebox.showinfo('Sucesso', 'Empréstimo registrado com sucesso')
 
-        # limpados os campos de entrada
-        id_livro.delete(0, END)
-        id_usuario.delete(0, END)
-        data_emprestimo.delete(0, END)
-        data_devolucao.delete(0, END)
-           
+        # limpando os campos de entrada
+        e_id_usuario.delete(0, END)
+        e_id_livro.delete(0, END)
+        e_data_devolucao.delete(0, END)
+        e_data_emprestimo.delete(0, END)
 
-    app_ = Label(frameDireita, text= 'Emprestimo', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
-    app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
-
-    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
-    app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
-
-    # label primeiro nome e entrada primeiro nome
-    livro = Label(frameDireita, text= 'ID Livro*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-    livro.grid(row= 2, column= 0, padx= 5, pady= 5, sticky= NSEW)
-    id_livro = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-    id_livro.grid(row= 2, column= 1, padx= 5, pady= 5, sticky= NSEW)
-
-    # label sobrenome e entrada sobrenome
-    usuario = Label(frameDireita, text= 'ID Usuário*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-    usuario.grid(row= 3, column= 0, padx= 5, pady= 5, sticky= NSEW)
-    id_usuario = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-    id_usuario.grid(row= 3, column= 1, padx= 5, pady= 5, sticky= NSEW)
-
-    # label e entrada endereco
-    emprestimo = Label(frameDireita, text= 'Data Emprestimo*', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-    emprestimo.grid(row= 4, column= 0, padx= 5, pady= 5, sticky= NSEW)
-    data_emprestimo = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-    data_emprestimo.grid(row= 4, column= 1, padx= 5, pady= 5, sticky= NSEW)
-
-    # label e entrada email
-    devolucao = Label(frameDireita, text= 'Data Devolução', padx= 5, anchor= NW, font= 'Ivy 10', bg= co1, fg= co4)
-    devolucao.grid(row= 5, column= 0, padx= 5, pady= 5, sticky= NSEW)
-    data_devolucao = Entry(frameDireita, width= 25, justify= 'left', relief= 'solid')
-    data_devolucao.grid(row= 5, column= 1, padx= 5, pady= 5, sticky= NSEW)
-
-    # botao salvar
-    img_salvar = Image.open('salvar.png')
-    img_salvar = img_salvar.resize((18,18))
-    img_salvar = ImageTk.PhotoImage(img_salvar)
-    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
-    b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
-
-# Livros emprestados no momento
-def livros_emprestimo():
-
-    app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_ = Label(frameDireita, text='Empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
-    app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
-    dados = get_books_on_loan()
-    
-    # Remova a árvore de visualização antiga se ela já existir
-    if hasattr(frameDireita, 'tree'):
-        frameDireita.tree.destroy()
+    # label primeiro nome e entrada primeiro nome
+    livro = Label(frameDireita, text='ID Livro*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    livro.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
+    e_id_livro = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_id_livro.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
 
-    # Criando uma nova árvore de visualização
-    list_header = ['ID', 'Título', 'Autor', 'Editora', 'Ano', 'ISBN']
+    # label sobrenome e entrada sobrenome
+    usuario = Label(frameDireita, text='ID Usuário*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    usuario.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
+    e_id_usuario = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_id_usuario.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
+
+    # label sobrenome e entrada sobrenome
+    dev = Label(frameDireita, text='Data de devolução*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    dev.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
+    e_data_devolucao = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_data_devolucao.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
+
+    # label sobrenome e entrada sobrenome
+    dt = Label(frameDireita, text='Data de emprestimo*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    dt.grid(row=5, column=0, padx=5, pady=5, sticky=NSEW)
+    e_data_emprestimo = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_data_emprestimo.grid(row=5, column=1, padx=5, pady=5, sticky=NSEW)
+
+   
+    # botao salvar
+    img_salvar = Image.open('salvar.png')
+    img_salvar = img_salvar.resize((18, 18))
+    img_salvar = ImageTk.PhotoImage(img_salvar)
+    b_salvar = Button(frameDireita, command=add, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
+    b_salvar.grid(row=7, column=1, pady=5, sticky=NSEW)
+
+
+    # Função para exibir todos os livros emprestados
+def livros_emprestimo():
+
+    # Configurar título e linha divisória
+    app_ = Label(frameDireita, text='Todos os livros emprestados no momento', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg='black')
+    app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg='white')
+    app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
+
+    dados = []
+    
+    # Obter livros emprestados
+    books_on_loan = get_books_on_loan()
+
+    # Processar dados dos livros emprestados
+    for book in books_on_loan:
+        dado = [f'{book[0]}', f'{book[1]}', f'{book[2]} {book[3]}', f'{book[4]}', f'{book[5]}']
+        dados.append(dado)
+
+    # Configurar cabeçalhos e colunas da Treeview
+    list_header = ['ID', 'Titulo', 'Nome do usuário', 'D. empréstimo', 'D. devolução']
     tree = ttk.Treeview(frameDireita, selectmode='extended', columns=list_header, show='headings')
 
     vsb = ttk.Scrollbar(frameDireita, orient='vertical', command=tree.yview)
     hsb = ttk.Scrollbar(frameDireita, orient='horizontal', command=tree.xview)
-
     tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
-
     tree.grid(column=0, row=2, sticky='nsew')
     vsb.grid(column=1, row=2, sticky='ns')
     hsb.grid(column=0, row=3, sticky='ew')
     frameDireita.grid_rowconfigure(0, weight=12)
 
-    hd = ['nw', 'nw', 'nw', 'nw', 'nw', 'nw']
-    h = [20, 165, 110, 100, 50, 100]
+    hd = ['nw', 'nw', 'nw', 'nw', 'ne']
+    h = [20, 175, 120, 90, 90]
     n = 0
 
-    for col in list_header:
-        tree.heading(col, text=col, anchor='nw')
-        tree.column(col, width=h[n], anchor=hd[n])
+    for col, width in zip(list_header, h):
+        tree.column(col, width=width, anchor=hd[n])
+        tree.heading(col, text=col, anchor=hd[n])
         n += 1
 
     for item in dados:
         tree.insert('', 'end', values=item)
 
-    # Atualize o atributo tree do frameDireita
-    frameDireita.tree = tree
+
     
+# Devolucao de um emprestimo
+def devolucao_emprestimo():
+
+    global img_salvar
+
+    def add():
+        # Obtendo os valores inseridos nos campos de entrada
+        loan_id = int(e_id_emprestimo.get())
+        return_date = e_data_retorno.get()
+
+        # Verificando se algum campo está vazio
+        for i in loan_id and return_date:
+            if i == '':
+                messagebox.showerror('Erro:', 'Preencha todos os campos')
+                return
+
+
+        # Inserindo os dados no banco de dados
+        update_loan_return_date(loan_id, return_date)
+
+        # Exibindo uma mensagem de sucesso
+        messagebox.showinfo('Sucesso', 'Livro retornado com sucesso')
+
+        # Limpando os campos de entrada
+        e_id_emprestimo.delete(0, END)
+        e_data_retorno.delete(0, END)
+
+    app_ = Label(frameDireita, text='Atualizar a data de devolução do empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
+
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
+
+    # Label e entrada para o ID do empréstimo
+    j_id_emprestimo = Label(frameDireita, text='ID do empréstimo*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    j_id_emprestimo.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
+    e_id_emprestimo = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_id_emprestimo.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
+
+    # Label e entrada para a nova data de devolução
+    l_data_retorno = Label(frameDireita, text='Nova data de devolução*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    l_data_retorno.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
+    e_data_retorno = Entry(frameDireita, width=25, justify='left', relief='solid')
+    e_data_retorno.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
+
+    # Botão salvar
+    img_salvar = Image.open('salvar.png')
+    img_salvar = img_salvar.resize((18, 18))
+    img_salvar = ImageTk.PhotoImage(img_salvar)
+    b_salvar = Button(frameDireita, command=add, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
+    b_salvar.grid(row=7, column=1, pady=5, sticky=NSEW)
+
+
 
 
 
@@ -463,6 +520,12 @@ def control(i):
             widget.destroy()
         # chamando a funcao ver livro
         livros_emprestimo()
+
+    if i == 'retorno':
+        for widget in frameDireita.winfo_children():
+            widget.destroy()
+        # chamando a funcao devolucao emprestimo
+        devolucao_emprestimo()
  
 #  Menu
 
@@ -505,7 +568,7 @@ b_emprestimo.grid(row= 4, column= 0, sticky= NSEW, padx= 5, pady= 6)
 img_devolucao = Image.open('usuario_livro_emprestimo.png')
 img_devolucao = img_devolucao.resize((22,22))
 img_devolucao = ImageTk.PhotoImage(img_devolucao)
-b_devolucao = Button(frameEsquerda, image= img_devolucao, compound= LEFT, anchor= NW, text= '  Devolução de um emprestimo', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+b_devolucao = Button(frameEsquerda, command=lambda: control('retorno'), image= img_devolucao, compound= LEFT, anchor= NW, text= '  Devolução de um emprestimo', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_devolucao.grid(row= 5, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 # livros emprestados no momento
