@@ -65,7 +65,7 @@ def novo_usuario():
         
     global img_salvar
 
-    def add():
+    def adf():
         first_name = e_p_nome.get()
         last_name = e_sobrenome.get()
         address = e_endereco.get()
@@ -134,60 +134,59 @@ def novo_usuario():
     img_salvar = Image.open('salvar.png')
     img_salvar = img_salvar.resize((18,18))
     img_salvar = ImageTk.PhotoImage(img_salvar)
-    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+    b_salvar = Button(frameDireita, command= adf, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
     b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
 
 
 
 def ver_usuarios():
-        
-
-    app_ = Label(frameDireita, text= 'Ver usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
-    app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
-    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
-    app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
+    app_ = Label(frameDireita, text='Ver usuário', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     dados = get_users()
-        
+
     # creating a treeview with dual scrollbars
-    list_header = [ 'ID', 'Nome', 'Sobrenome', 'Endereço', 'Email', 'Telefone']
+    list_header = ['ID', 'Nome', 'Sobrenome', 'Endereço', 'Email', 'Telefone']
 
     global tree
 
-    tree = ttk.Treeview(frameDireita, selectmode= 'extended', columns= list_header, show= 'headings')
+    tree = ttk.Treeview(frameDireita, selectmode='extended', columns=list_header, show='headings')
 
     # vertical scrollbar
-    vsb = ttk.Scrollbar(frameDireita, orient= 'vertical', command= tree.yview)
+    vsb = ttk.Scrollbar(frameDireita, orient='vertical', command=tree.yview)
 
     # horizontal scrollbar
-    hsb = ttk.Scrollbar(frameDireita, orient= 'horizontal', command= tree.xview)
+    hsb = ttk.Scrollbar(frameDireita, orient='horizontal', command=tree.xview)
 
-    tree.configure(yscrollcommand= vsb.set, xscrollcommand= hsb.set)
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-    tree.grid(column= 0, row= 2, sticky= 'nsew')
-    vsb.grid(column= 1, row= 2, sticky= 'ns')
-    hsb.grid(column= 0, row= 3, sticky= 'ew')
-    frameDireita.grid_rowconfigure(0, weight= 12)
+    tree.grid(column=0, row=2, sticky='nsew')
+    vsb.grid(column=1, row=2, sticky='ns')
+    hsb.grid(column=0, row=3, sticky='ew')
+    frameDireita.grid_rowconfigure(0, weight=12)
 
-    hd = ['nw', 'nw', 'nw','nw', 'nw', 'nw']
-    h = [20 , 80, 80, 120, 76, 100]
+    hd = ['nw', 'nw', 'nw', 'nw', 'nw', 'nw']
+    h = [20, 80, 80, 120, 76, 100]
     n = 0
 
     for col in list_header:
-        tree.heading(col, text= col, anchor= 'nw')
+        tree.heading(col, text=col, anchor='nw')
         # adjust the column's width to the header string
-        tree.column(col, width= h[n], anchor= hd[n])
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
 
-        n+= 1
-        
-        for item in dados:
-            tree.insert('', 'end', values= item)
+    # Move the loop for inserting items outside of the loop for setting column headers
+    for item in dados:
+        tree.insert('', 'end', values=item)
+
 
 
 def novo_livro():
     global img_salvar
 
-    def add():
+    def adb():
         title = e_titulo.get()
         author = e_autor.get()
         publish = e_editora.get()
@@ -256,7 +255,7 @@ def novo_livro():
     img_salvar = Image.open('salvar.png')
     img_salvar = img_salvar.resize((18,18))
     img_salvar = ImageTk.PhotoImage(img_salvar)
-    b_salvar = Button(frameDireita, command= add, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
+    b_salvar = Button(frameDireita, command= adb, image= img_salvar, compound= LEFT, width= 100,  anchor= NW, text= '  Salvar', bg= co1, fg= co4, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
     b_salvar.grid(row= 7, column= 1, pady= 5, sticky= NSEW)
     
 
@@ -309,7 +308,7 @@ def ver_livros():
 def emprestimo():
     global img_salvar
 
-    def add():
+    def ade():
         user_id = e_id_usuario.get()  # Corrigido para 'e_id_usuario'
         book_id = e_id_livro.get()     # Corrigido para 'e_id_livro'
         dev_id = e_data_devolucao.get()
@@ -369,7 +368,7 @@ def emprestimo():
     img_salvar = Image.open('salvar.png')
     img_salvar = img_salvar.resize((18, 18))
     img_salvar = ImageTk.PhotoImage(img_salvar)
-    b_salvar = Button(frameDireita, command=add, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
+    b_salvar = Button(frameDireita, command=ade, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
     b_salvar.grid(row=7, column=1, pady=5, sticky=NSEW)
 
 
@@ -423,7 +422,7 @@ def devolucao_emprestimo():
 
     global img_salvar
 
-    def add():
+    def adc():
         # Obtendo os valores inseridos nos campos de entrada
         loan_id = int(e_id_emprestimo.get())
         return_date = e_data_retorno.get()
@@ -467,7 +466,7 @@ def devolucao_emprestimo():
     img_salvar = Image.open('salvar.png')
     img_salvar = img_salvar.resize((18, 18))
     img_salvar = ImageTk.PhotoImage(img_salvar)
-    b_salvar = Button(frameDireita, command=add, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
+    b_salvar = Button(frameDireita, command=adc, image=img_salvar, compound=LEFT, width=100, anchor=NW, text='  Salvar', bg=co1, fg=co4, font=('Ivy 11'), overrelief=RIDGE, relief=GROOVE)
     b_salvar.grid(row=7, column=1, pady=5, sticky=NSEW)
 
 
