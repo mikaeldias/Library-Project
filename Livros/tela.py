@@ -92,8 +92,6 @@ def novo_usuario():
         e_email.delete(0, END)
         e_numero.delete(0, END)
 
-
-
                   
 
     app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
