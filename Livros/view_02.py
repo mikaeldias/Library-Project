@@ -59,24 +59,25 @@ def exibir_livros():
     
     return(livros)
 
-exibir_livros()
+
 
 # funcao para realizar emprestimos
 def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
     conn = connect()
-    conn.execute("INSERT INTO emprestimo (id_livro, id_usuario, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?)", (id_livro, id_usuario, data_emprestimo, data_devolucao))
+    conn.execute("INSERT INTO emprestimo(id_livro, id_usuario, data_emprestimo, data_devolucao)\
+                  VALUES (?,?,?,?)", (id_livro, id_usuario, data_emprestimo, data_devolucao))
     conn.commit()
     conn.close()
 
 #funcao para exibir todos os livros emprestados no momento
 def get_books_on_loan():    
-    con = connect()
-    result = con.execute('SELECT emprestimo.id, livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
+    conn = connect()
+    result = conn.execute('SELECT livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.id, emprestimo.data_emprestimo, emprestimo.data_devolucao\
                          FROM livro\
                          INNER JOIN emprestimo ON livro.id = emprestimo.id_livro\
                          INNER JOIN  usuario ON usuario.id = emprestimo.id_usuario\
-                         WHERE emprestimo.data_devolucao IS NULL').fetchall()
-    con.close()
+                         WHERE emprestimo.data_devolucao ').fetchall()
+    conn.close()
     return result
 
 
@@ -87,4 +88,6 @@ def update_loan_return_date(id_emprestimo, data_devolucao):
     conn.commit()
     conn.close()
 
-
+livros_emprestados = get_books_on_loan()
+print(livros_emprestados)
+exibir_livros()
