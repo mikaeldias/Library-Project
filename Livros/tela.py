@@ -429,24 +429,26 @@ def livros_emprestimo():
     
 # Devolucao de um emprestimo
 def devolucao_emprestimo():
-
     global img_salvar
 
     def adc():
         # Obtendo os valores inseridos nos campos de entrada
-        loan_id = int(e_id_emprestimo.get())
+        loan_id_str = e_id_emprestimo.get()
         return_date = e_data_retorno.get()
 
-        lista = [e_id_emprestimo, e_data_retorno]
+        # Verificando se algum campo está vazio
+        if loan_id_str.strip() == '' or return_date.strip() == '':
+            messagebox.showerror('Erro', 'Preencha todos os campos')
+            return
 
-        # verificando se algum campo está vazio
-        for i in lista:
-            if i == '':
-                messagebox.showerror('Erro:', 'Preencha todos os campos')
-                return
+        try:
+            # Convertendo o ID do empréstimo para inteiro
+            loan_id = int(loan_id_str)
+        except ValueError:
+            messagebox.showerror('Erro', 'ID do empréstimo deve ser um número inteiro válido')
+            return
 
-
-        # Inserindo os dados no banco de dados
+        # Inserindo os dados no banco de dados (essa função precisa ser definida)
         update_loan_return_date(loan_id, return_date)
 
         # Exibindo uma mensagem de sucesso
@@ -610,5 +612,5 @@ img_livros_emprestados = ImageTk.PhotoImage(img_livros_emprestados)
 b_livros_emprestados = Button(frameEsquerda, command=lambda: control('livros_emprestimo'), image= img_livros_emprestados, compound= LEFT, anchor= NW, text= '  Livros emprestados no momento', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_livros_emprestados.grid(row= 6, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
-
+input()
 janela.mainloop()
