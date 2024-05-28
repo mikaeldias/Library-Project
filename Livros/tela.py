@@ -23,6 +23,9 @@ co8 = '#263238' # + verde
 co9 = '#e9edf5' # + verde
 co10 = '6e8faf' # 
 co11 = '#f2f4f2' 
+co12 = '#4169e1' 
+co13 = '#000000'
+co14 = '#daa520'
 
 # criando janela
 janela = Tk()
@@ -35,10 +38,10 @@ style = Style(janela)
 style.theme_use('clam')
 
 # Frames
-frameCima = Frame(janela, width = 770, height = 50, bg = co6, relief = 'flat' )
+frameCima = Frame(janela, width = 770, height = 50, bg = co13, relief = 'flat' )
 frameCima.grid(row = 0, column = 0, columnspan = 2, sticky = NSEW )
 
-frameEsquerda = Frame(janela, width = 150, height = 265, bg = co4, relief = 'solid' )
+frameEsquerda = Frame(janela, width = 150, height = 265, bg = co14, relief = 'solid' )
 frameEsquerda.grid(row = 1, column = 0, sticky = NSEW )
 
 frameDireita = Frame(janela, width = 600, height = 265, bg = co1, relief = 'raised' )
@@ -46,17 +49,24 @@ frameDireita.grid(row = 1, column = 1, sticky = NSEW )
 
 # LOGO
 # abrindo a imagem
-app_img = Image.open('logo_livros_sistema.png')
-app_img = app_img.resize((40,40))
+app_img = Image.open('ROSACRUZ.png')
+app_img = app_img.resize((50,40))
 app_img = ImageTk.PhotoImage(app_img)
 
-app_logo = Label(frameCima, image= app_img, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg=co6, fg= co1)
-app_logo.place(x= 5, y=0) # imagem canto superior esquerdo
+app_img1 = Image.open('ROSA CRUZ 2.jpeg')
+app_img1 = app_img1.resize((90,50))
+app_img1 = ImageTk.PhotoImage(app_img1)
 
-app_logo = Label(frameCima, text= 'Sistema de Gerenciamento de Livros',compound= LEFT, padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co6, fg= co1)
-app_logo.place(x= 50, y=7) # texto 
+app_logo = Label(frameCima, image= app_img, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
+app_logo.place(x=0, y=5) # imagem canto superior esquerdo
 
-app_linha = Label(frameCima, width= 770, height= 1 , padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co3, fg= co1)
+app_logo = Label(frameCima, image= app_img1, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
+app_logo.place(x=695, y=5) # imagem canto superior esquerdo
+
+app_logo = Label(frameCima, text= 'Sistema de Gerenciamento de Livros',compound= LEFT, padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co13, fg= co1)
+app_logo.place(x= 170, y=7) # texto 
+
+app_linha = Label(frameCima, width= 770, height= 1 , padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co13, fg= co14)
 app_linha.place(x= 0, y=47) # linha azul abaixo do texto
 
 # Função para registrar um novo usuário
@@ -94,10 +104,10 @@ def novo_usuario():
 
                   
 
-    app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_ = Label(frameDireita, text= 'Inserir um novo usuário', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co13)
     app_.grid(row= 0, column= 0, columnspan= 5, sticky= NSEW)
 
-    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co1, fg= co1)
     app_linha.grid(row= 1, column= 0, columnspan= 4, sticky= NSEW)
 
     # label primeiro nome e entrada primeiro nome
@@ -140,9 +150,9 @@ def novo_usuario():
 
 
 def ver_usuarios():
-    app_ = Label(frameDireita, text='Ver usuário', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_ = Label(frameDireita, text='Ver usuário', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co13)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
-    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co1, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     dados = get_users()
@@ -215,10 +225,10 @@ def novo_livro():
 
 
 
-    app_ = Label(frameDireita, text= 'Inserir um novo livro', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co4)
+    app_ = Label(frameDireita, text= 'Inserir um novo livro', width= 50, compound= LEFT, padx= 5, pady= 10, font= 'Verdana 12', bg= co1, fg= co13)
     app_.grid(row= 0, column= 0, columnspan= 3, sticky= NSEW)
 
-    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co3, fg= co1)
+    app_linha = Label(frameDireita, width= 505, height= 1 , anchor= NW, font= ('Verdana 1'),bg=co1, fg= co1)
     app_linha.grid(row= 1, column= 0, columnspan= 3, sticky= NSEW)
 
     # label primeiro nome e entrada primeiro nome
@@ -264,9 +274,9 @@ def novo_livro():
         
 
 def ver_livros():
-    app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_ = Label(frameDireita, text='Todos os livros', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co13)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
-    app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha = Label(frameDireita, width=505, height=1 , anchor=NW, font=('Verdana 1'), bg=co1, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     dados = exibir_livros()
@@ -333,10 +343,10 @@ def emprestimo():
         e_data_devolucao.delete(0, END)
         e_data_emprestimo.delete(0, END)
 
-    app_ = Label(frameDireita, text='Empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_ = Label(frameDireita, text='Empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co13)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
 
-    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co1, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     # label primeiro nome e entrada primeiro nome
@@ -352,13 +362,13 @@ def emprestimo():
     e_id_usuario.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
 
     # label sobrenome e entrada sobrenome
-    dev = Label(frameDireita, text='Data de devolução*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    dev = Label(frameDireita, text='Data de emprestimo*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
     dev.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
     e_data_devolucao = Entry(frameDireita, width=25, justify='left', relief='solid')
     e_data_devolucao.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
 
     # label sobrenome e entrada sobrenome
-    dt = Label(frameDireita, text='Data de emprestimo*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
+    dt = Label(frameDireita, text='Data de devolução*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
     dt.grid(row=5, column=0, padx=5, pady=5, sticky=NSEW)
     e_data_emprestimo = Entry(frameDireita, width=25, justify='left', relief='solid')
     e_data_emprestimo.grid(row=5, column=1, padx=5, pady=5, sticky=NSEW)
@@ -376,9 +386,9 @@ def emprestimo():
 def livros_emprestimo():
 
     # Configurar título e linha divisória
-    app_ = Label(frameDireita, text='Todos os livros emprestados no momento', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg='black')
+    app_ = Label(frameDireita, text='Todos os livros emprestados no momento', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co13)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
-    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg='white')
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co1, fg='white')
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     dados = []
@@ -444,23 +454,22 @@ def devolucao_emprestimo():
         e_id_emprestimo.delete(0, END)
         e_data_retorno.delete(0, END)
 
-    app_ = Label(frameDireita, text='Atualizar a data de devolução do empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co4)
+    app_ = Label(frameDireita, text='Atualizar a data de devolução do empréstimo', width=50, compound=LEFT, padx=5, pady=10, font='Verdana 12', bg=co1, fg=co13)
     app_.grid(row=0, column=0, columnspan=5, sticky=NSEW)
 
-    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co3, fg=co1)
+    app_linha = Label(frameDireita, width=505, height=1, anchor=NW, font=('Verdana 1'), bg=co1, fg=co1)
     app_linha.grid(row=1, column=0, columnspan=4, sticky=NSEW)
 
     # Label e entrada para o ID do empréstimo
     j_id_emprestimo = Label(frameDireita, text='ID do empréstimo*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
-    j_id_emprestimo.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
+    j_id_emprestimo.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
     e_id_emprestimo = Entry(frameDireita, width=25, justify='left', relief='solid')
-    e_id_emprestimo.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
-
+    e_id_emprestimo.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
     # Label e entrada para a nova data de devolução
     l_data_retorno = Label(frameDireita, text='Nova data de devolução*', padx=5, anchor=NW, font='Ivy 10', bg=co1, fg=co4)
-    l_data_retorno.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
+    l_data_retorno.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
     e_data_retorno = Entry(frameDireita, width=25, justify='left', relief='solid')
-    e_data_retorno.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
+    e_data_retorno.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
 
     # Botão salvar
     img_salvar = Image.open('salvar.png')

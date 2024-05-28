@@ -89,5 +89,4 @@ def update_loan_return_date(id_emprestimo, data_devolucao):
     conn.close()
 
 livros_emprestados = get_books_on_loan()
-print(livros_emprestados)
 exibir_livros()
