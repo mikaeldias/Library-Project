@@ -612,15 +612,4 @@ img_livros_emprestados = ImageTk.PhotoImage(img_livros_emprestados)
 b_livros_emprestados = Button(frameEsquerda, command=lambda: control('livros_emprestimo'), image= img_livros_emprestados, compound= LEFT, anchor= NW, text= '  Livros emprestados no momento', bg= co4, fg= co1, font= ('Ivy 11'), overrelief= RIDGE, relief= GROOVE)
 b_livros_emprestados.grid(row= 6, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
-<<<<<<< Updated upstream
 janela.mainloop()
-=======
-
-
-
-
-
-
-janela.mainloop()
-input()
->>>>>>> Stashed changes

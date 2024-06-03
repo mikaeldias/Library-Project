@@ -69,17 +69,27 @@ def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
     conn.commit()
     conn.close()
 
-#funcao para exibir todos os livros emprestados no momento
+# Função para obter os livros emprestados no momento
 def get_books_on_loan():    
     conn = connect()
-    result = conn.execute('SELECT emprestimo.id, livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.data_emprestimo, emprestimo.data_devolucao\
-                         FROM livro\
-                         INNER JOIN emprestimo ON livro.id = emprestimo.id_livro\
-                         INNER JOIN  usuario ON usuario.id = emprestimo.id_usuario\
-                         WHERE emprestimo.data_devolucao ').fetchall()
-    conn.close()
-    return result
+    try:
+        # Tente executar a consulta SQL
+        result = conn.execute('SELECT emprestimo.id, livro.titulo, usuario.nome, usuario.sobrenome, emprestimo.data_emprestimo, emprestimo.data_devolucao \
+                                FROM livro \
+                                INNER JOIN emprestimo ON livro.id = emprestimo.id_livro \
+                                INNER JOIN usuario ON usuario.id = emprestimo.id_usuario \
+                                WHERE emprestimo.data_devolucao').fetchall()
+        conn.close()
+        return result
+    except sqlite3.OperationalError as e:
+        # Se ocorrer um erro de tabela não existente, imprima uma mensagem e retorne uma lista vazia
+        print("Erro ao buscar livros emprestados:", e)
+        conn.close()
+        return []
 
+# Exemplo de uso
+livros_emprestados = get_books_on_loan()
+print(livros_emprestados)
 
 # funçao para atualizar a data de devolução de emprestimo
 def update_loan_return_date(id_emprestimo, data_devolucao):
