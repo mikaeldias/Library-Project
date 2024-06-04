@@ -1,37 +1,62 @@
-# -*- mode: python ; coding: utf-8 -*-
+# tela.spec
+# ...
 
+# Inclua este import no topo do seu arquivo .spec
+import os
 
+# Função para coletar imagens
+def collect_images(directory):
+    data_files = []
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff')):
+                file_path = os.path.join(root, file)
+                data_files.append((file_path, file_path))
+    return data_files
+
+# Caminho para a pasta de imagens
+image_folder = 'path/to/your/images/folder'
+
+# Colete as imagens
+images = collect_images(image_folder)
+
+# Adicione as imagens coletadas ao parâmetro `datas`
 a = Analysis(
-    ['Livros\\tela.py'],
-    pathex=[],
+    ['tela.py'],
+    pathex=['path/to/your/project'],
     binaries=[],
-    datas=[],
+    datas=images,  # Aqui você adiciona a lista de imagens
     hiddenimports=[],
     hookspath=[],
-    hooksconfig={},
     runtime_hooks=[],
     excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
     noarchive=False,
 )
-pyz = PYZ(a.pure)
 
+# Continue com o resto do arquivo .spec como de costume
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
+    exclude_binaries=True,
     name='tela',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    upx_exclude=[],
-    runtime_tmpdir=None,
     console=True,
-    disable_windowed_traceback=False,
-    argv_emulation=False,
-    target_arch=None,
-    codesign_identity=None,
-    entitlements_file=None,
+)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='tela',
 )

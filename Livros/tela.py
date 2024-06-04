@@ -3,12 +3,9 @@ from tkinter .ttk import *
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-
-
 from tkinter import messagebox
-
-# importando as funcoes da view
 from view_02 import *
+
 
 
 co0 = '#2e2d2b' # preta
@@ -49,18 +46,18 @@ frameDireita.grid(row = 1, column = 1, sticky = NSEW )
 
 # LOGO
 # abrindo a imagem
-app_img = Image.open('ROSACRUZ.png')
-app_img = app_img.resize((50,40))
-app_img = ImageTk.PhotoImage(app_img)
+# app_img0 = Image.open('ROSACRUZ1.jpeg')
+# app_img0 = app_img0.resize((50,40))
+# app_img0 = ImageTk.PhotoImage(app_img0)
 
-app_img1 = Image.open('ROSA CRUZ 2.jpeg')
-app_img1 = app_img1.resize((90,50))
-app_img1 = ImageTk.PhotoImage(app_img1)
+# app_img1 = Image.open('ROSA CRUZ 2.jpeg')
+# app_img1 = app_img1.resize((90,50))
+# app_img1 = ImageTk.PhotoImage(app_img1)
 
-app_logo = Label(frameCima, image= app_img, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
+app_logo = Label(frameCima, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
 app_logo.place(x=0, y=5) # imagem canto superior esquerdo
 
-app_logo = Label(frameCima, image= app_img1, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
+app_logo = Label(frameCima, width= 1000, compound= LEFT, padx= 5, anchor= NW, bg= co13, fg= co1)
 app_logo.place(x=695, y=5) # imagem canto superior esquerdo
 
 app_logo = Label(frameCima, text= 'Sistema de Gerenciamento de Livros',compound= LEFT, padx= 5, anchor= NW, font= ('Verdana 15 bold'),bg=co13, fg= co1)
@@ -613,3 +610,5 @@ b_livros_emprestados = Button(frameEsquerda, command=lambda: control('livros_emp
 b_livros_emprestados.grid(row= 6, column= 0, sticky= NSEW, padx= 5, pady= 6)
 
 janela.mainloop()
+
+input()
