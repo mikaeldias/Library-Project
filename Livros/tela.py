@@ -5,6 +5,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
 from view_02 import *
+from PIL import Image
+from dados import *
 
 
 
